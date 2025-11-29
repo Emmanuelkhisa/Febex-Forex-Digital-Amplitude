@@ -1,70 +1,291 @@
-# Project Febex Forex Digital Amplitude Chart Indicator
+---
 
+# 📘 **FEBEX HDA — Hybrid Digital Amplitude System**
 
-![Febex Digital Amplitude Chart](Content/sample.jpg)
-## Overview
+*A Session-Structured Market Bias Engine Inspired by Febex Digital Amplitude*
 
-This project explores the dynamics of the XAUUSD Forex pair during specific trading sessions by analyzing binary representations of daily session outcomes (Buy/Sell). It applies various computational and mathematical concepts to uncover patterns, relationships, and temporal dynamics. A key component is a Python tool that calculates and visualizes a "Digital Amplitude" based on these binary patterns, offering a unique perspective analogous to market phases like Accumulation, Manipulation, and Distribution (AMD).
+---
 
-This research is based on historical data collected by the Emmanuelkhisa and is intended for study and analysis purposes. It is not financial advice, and any application of these concepts in live trading should be done with extreme caution and thorough independent validation on diverse datasets.
+## 🔥 Overview
 
-## Repository Structure
+**FEBEX HDA** is an advanced market-bias engine that analyzes the Forex market using a combination of:
 
-* `README.md`: Project overview and instructions (this file).
-* `Content/`: Contains the detailed research work.
-    * `ResearchWork.md`: The comprehensive report detailing the methodology, analysis, insights, and conclusions.
-* `Tools/`: Contains the Python tool and dependencies.
-    * `febex_analyzer.py`: The Python script to input data, calculate amplitude, and generate the chart.
-    * `requirements.txt`: Lists the necessary Python libraries.
+### ✔ Digital Direction
 
+### ✔ 3-Day Pattern Digital Amplitude
 
-## Getting Started
+### ✔ Volatility-Weighted Strength (ATR-normalized)
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone https://github.com/Emmanuelkhisa/Febex-Forex-Digital-Amplitude
-    cd Febex-Forex-Digital-Amplitude
-    ```
-2.  **Install Dependencies:** Ensure you have Python installed. Then, install the required libraries:
-    ```bash
-    pip install -r Tools/requirements.txt
-    ```
-3.  **Run the Tool:** Navigate to the `Tools/` directory and run the Python script:
-    ```bash
-    cd Tools
-    python febex_analyzer.py
-    ```
-4.  **Input Data:** Use option `1` in the program to input your collected binary data for new trading days. The data will be stored in `forex_session_data.csv`.
-5.  **View Chart:** Use option `2` to select a set of sessions and visualize the Febex Digital Amplitude chart.
+### ✔ Hybrid Digital Amplitude (HDA)
 
-## A TIP FOR YOU
-->This Project uses Forex data with a binary number data sets.
+This hybrid model captures both **directional structure** (session bias patterns) and **true candle amplitude** (range/volatility magnitude) — creating a unique “market heartbeat” signal.
 
-->Switch your Chart to a higher time frame . 4H to be specific.
+The HDA system is designed for:
 
-->Record each Candle stick; "'1' for Buy/Long bias, & '0' for Sell/Short bias (or a Doji)."
+* Session-based market analytics
+* Trend strength detection
+* Market bias visualization
+* Pattern-driven momentum modeling
+* Direction-volatility hybrid analysis
 
-->In a day, you will end up with sets of Data e.g (101) Representing Long, Short, Long runs for E.g London, Lond-Newy overlap, NewYork sessions respectively.
+---
 
-->A csv file is generated automatically using the python file, which will hold your Datasets for graph creation.
+## 🧪 What Makes Febex HDA Unique?
 
-->For accuracy, Update the csv file with more forex session data sets as guided when you run the Python file.
+Traditional indicators treat price direction and volatility separately.
 
-## Research Work
+FEBEX HDA combines them.
 
-The detailed methodology, analysis, and insights are documented in the `Content/ResearchWork.md` file. This report explains the binary data encoding, the application of various computational concepts (probabilities, correlation, entropy, etc.), the derivation of the Digital Amplitude, and the interpretation of the chart in relation to potential market phases.
+It integrates:
 
-## Contributing / Further Research
+1. **Binary Session Outcome (0/1)**
+2. **Digital Amplitude (3-day pattern logic)**
+3. **ATR-Normalized Volatility Amplitude**
+4. **Directionally-Weighted Strength Score**
 
-Ideas for expanding this project or conducting further research include:
+This creates a single, readable signal that shows:
 
-* Gathering more extensive historical data.
-* Applying the analysis to different Forex pairs.
-* Exploring alternative amplitude calculation rules or indicators derived from binary data.
-* Implementing more advanced statistical tests or machine learning models for prediction based on the analyzed patterns.
+* When sessions are strongly bullish
+* When sessions are weak or indecisive
+* When volatility confirms or contradicts direction
+* When structural reversals begin forming
 
-Feel free to fork the repository and build upon this research.
+---
 
-## License
+# 📚 Core Concepts
 
-[MIT License]
+---
+
+## 1. **Binary Session Outcome**
+
+Each session is encoded into:
+
+* **1 = bullish / upward bias**
+* **0 = bearish / downward bias**
+* **Doji = inverse of previous binary**
+  *(to avoid directionless disruption)*
+
+---
+
+## 2. **Digital Amplitude (3-Day Pattern Rule)**
+
+Digital Amplitude evaluates the **last 3 session outcomes**.
+
+```
+011 → +1  
+111 → +1  
+100 → -1  
+000 → -1  
+otherwise → 0
+```
+
+Interpretation:
+
+* **+1** = structural bullish tendency
+* **-1** = structural bearish tendency
+* **0**  = noise / mixed pattern
+
+---
+
+## 3. **Volatility Amplitude (ATR-Normalized Range)**
+
+Each session’s price amplitude:
+
+```
+range = high - low
+amplitude = range / ATR(14)
+```
+
+This gives volatility in units of average range:
+
+* 0.5 = half ATR
+* 1.0 = average session
+* 2.5 = strong expansion
+
+---
+
+## 4. **Directional Strength Score**
+
+Volatility must respect direction.
+
+So the amplitude is signed:
+
+```
+strength = amplitude * ( +1 or -1 depending on session direction )
+```
+
+---
+
+## 5. **Hybrid Digital Amplitude (HDA)**
+
+The **final signal** adds pattern logic + volatility strength:
+
+```
+HDA = DigitalAmplitude + StrengthScore
+```
+
+Examples:
+
+* Strong bullish pattern → **+3.0**
+* Weak mixed candle → **0**
+* Violent bearish reversal → **–4.2**
+
+This is the core "Hybrid Amplitude Wave".
+
+---
+
+# 📂 Project Structure
+
+```
+Febex-HDA/
+│
+├── data/
+│   └── forex_session_data_blocks.csv     # Stored session data
+│
+├── modules/
+│   ├── amplitude.py                      # Core amplitude & HDA logic
+│   ├── data_input.py                     # Input system for binary & OHLC data
+│   ├── plotting.py                       # Digital + Hybrid amplitude charts
+│   └── utils.py                          # File checks, date helpers, etc
+│
+├── main.py                               # CLI menu program
+│
+└── README.md                             # Documentation
+```
+
+---
+
+# 🛠 Installation & Requirements
+
+### Requirements
+
+```
+Python 3.8+
+pandas
+matplotlib
+numpy
+```
+
+### Install dependencies
+
+```bash
+pip install pandas matplotlib numpy
+```
+
+---
+
+# 🚀 How to Use
+
+---
+
+## **1. Run the Program**
+
+```bash
+python main.py
+```
+
+You will see:
+
+```
+--- FEBEX HYBRID DIGITAL AMPLITUDE ---
+1. Input Data Block
+2. View Amplitude Chart
+3. Exit
+```
+
+---
+
+## **2. Input Session Data**
+
+Select:
+
+```
+1 → Input Data Block
+```
+
+You’ll provide:
+
+* Date range
+* Session set (Asian / London / NY / Tokyo)
+* 3-digit binary pattern
+* OHLC values
+
+The system automatically:
+
+* Skips weekends
+* Stores into CSV
+* Prepares for amplitude computation
+
+---
+
+## **3. Visualize Amplitude Waves**
+
+Select:
+
+```
+2 → View Amplitude Chart
+```
+
+You’ll see a dual-plot:
+
+* **Digital Amplitude (classic Febex)**
+* **Hybrid Digital Amplitude (volatility-weighted)**
+
+The result shows:
+
+* Market structure shifts
+* Session-specific volatility expansions
+* Reversal signals
+* Trend continuation patterns
+
+---
+
+# 📊 Example Output Chart
+
+* **Cyan** = Digital Amplitude (±1)
+* **Yellow** = Hybrid Digital Amplitude (continuous wave)
+
+Interpretation:
+
+* Spikes = volatility bursts
+* Smooth curves = structural trends
+* Divergence = early trend-change warning
+
+---
+
+# 🔮 Future Extensions (Roadmap)
+
+The system architecture supports future upgrades:
+
+### 🚧 Coming Features
+
+* Automatic OHLC extraction from **TradingView CSV**
+* Direct OHLC from **MT5 Terminal**
+* Probability map for digital patterns
+* Forecasting model using hybrid distributions
+* Heatmap of HDA ranges per session
+* AI-based session bias predictor (LSTM/Transformer)
+* Web dashboard (Plotly Dash)
+
+---
+
+# 🤝 Contribution
+
+Pull requests, refinements, and analytics enhancements are welcome.
+
+If you build advanced Febex-based indicators, feel free to contribute!
+
+---
+
+# 📄 License
+
+MIT License — free to modify and distribute.
+
+---
+
+# ⭐ If you like this project
+
+Please **star** the repository — it helps!
+
+---
+

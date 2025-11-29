@@ -1,5 +1,3 @@
----
-
 # 📘 **FEBEX HDA — Hybrid Digital Amplitude System**
 
 *A Session-Structured Market Bias Engine Inspired by Febex Digital Amplitude*
